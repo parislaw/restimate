@@ -1,0 +1,70 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+/* Sizes */
+.sm {
+  padding: 2px 8px;
+  font-size: var(--font-xs);
+}
+
+.md {
+  padding: 4px 12px;
+  font-size: var(--font-sm);
+}
+
+/* Variants */
+.default {
+  background-color: var(--color-border-light);
+  color: var(--color-text-secondary);
+}
+
+.primary {
+  background-color: rgba(99, 102, 241, 0.1);
+  color: var(--color-primary);
+}
+
+.secondary {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: var(--color-secondary);
+}
+
+.success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.info {
+  background-color: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+/* Recovery Style Colors */
+.social {
+  background-color: rgba(236, 72, 153, 0.1);
+  color: var(--color-social);
+}
+
+.solo {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: var(--color-solo);
+}
+
+.physical {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--color-physical);
+}
+
+.mental {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--color-mental);
+}

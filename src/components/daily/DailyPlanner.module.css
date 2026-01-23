@@ -1,0 +1,131 @@
+.planner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+}
+
+.date {
+  margin: var(--spacing-xs) 0 0 0;
+  font-size: var(--font-base);
+  color: var(--color-text-secondary);
+}
+
+/* Insights */
+.insights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.insightContent {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+.insightIcon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.insightTitle {
+  margin: 0;
+  font-size: var(--font-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+}
+
+.insightMessage {
+  margin: var(--spacing-xs) 0 0 0;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.insightAction {
+  display: inline-block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-medium);
+}
+
+/* Overview */
+.overviewGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+  text-align: center;
+}
+
+.overviewItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.overviewValue {
+  font-size: var(--font-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-primary);
+}
+
+.overviewLabel {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+}
+
+/* Sections */
+.sectionTitle {
+  margin: 0;
+  font-size: var(--font-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+}
+
+.sectionSubtitle {
+  margin: var(--spacing-xs) 0 var(--spacing-md) 0;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Breaks List */
+.breaksList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.emptyCard {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.emptyText {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .overviewGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
