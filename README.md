@@ -2,13 +2,27 @@
 
 A rest planning app to help people gain insights and plan ahead for taking time to rest and recover.
 
-## About
+## Tech Stack
 
-Restimate helps you track, plan, and optimize your rest and recovery time for better well-being and productivity.
+- **Frontend:** React + Vite
+- **Backend:** Supabase
+- **Hosting:** Netlify
 
 ## Getting Started
 
-Coming soon.
+```bash
+npm install
+npm run dev
+```
+
+## Environment Variables
+
+Create a `.env.local` file with:
+
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
 ## License
 
