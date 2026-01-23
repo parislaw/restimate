@@ -1,0 +1,111 @@
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-sm);
+}
+
+.timeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.time {
+  font-size: var(--font-lg);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+}
+
+.duration {
+  font-size: var(--font-sm);
+  color: var(--color-text-muted);
+}
+
+.badge {
+  padding: 2px 8px;
+  font-size: var(--font-xs);
+  font-weight: var(--font-medium);
+  color: var(--color-primary);
+  background-color: rgba(99, 102, 241, 0.1);
+  border-radius: var(--radius-full);
+}
+
+.suggestion {
+  margin-bottom: var(--spacing-sm);
+}
+
+.suggestionType {
+  display: inline-block;
+  font-size: var(--font-xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.suggestionMessage {
+  margin: 0;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.actionTitle {
+  margin: 0;
+  font-size: var(--font-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+}
+
+/* Modal Content */
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.modalMeta {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.modalMetaItem {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+.modalDescription {
+  margin: 0;
+  font-size: var(--font-base);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+.modalTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.tag {
+  padding: 4px 12px;
+  font-size: var(--font-xs);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  background-color: var(--color-border-light);
+  border-radius: var(--radius-full);
+}
+
+.modalActions {
+  margin-top: var(--spacing-sm);
+}

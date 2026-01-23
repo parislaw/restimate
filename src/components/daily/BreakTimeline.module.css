@@ -1,0 +1,94 @@
+.timeline {
+  margin: var(--spacing-md) 0;
+}
+
+.track {
+  position: relative;
+  height: 60px;
+  background-color: var(--color-border-light);
+  border-radius: var(--radius-lg);
+  overflow: visible;
+}
+
+.hourMarker {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.hourLine {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background-color: var(--color-border);
+}
+
+.hourLabel {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--font-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.breakBlock {
+  position: absolute;
+  top: 8px;
+  height: calc(100% - 16px);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  min-width: 40px;
+}
+
+.breakBlock:hover {
+  transform: scaleY(1.1);
+}
+
+.breakTime {
+  font-size: var(--font-xs);
+  font-weight: var(--font-medium);
+  color: white;
+  white-space: nowrap;
+  padding: 0 var(--spacing-xs);
+}
+
+.legend {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-2xl);
+  justify-content: center;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 640px) {
+  .breakTime {
+    display: none;
+  }
+
+  .hourLabel {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "1",
+    "title": "Micro-Meditation",
+    "description": "Sit comfortably and focus on the physical sensations of your breath for a few minutes.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Solo Decompressor", "Mental Unplugger"],
+    "tags": ["SOLO", "MENTAL"]
+  },
+  {
+    "id": "2",
+    "title": "Desk Stretches",
+    "description": "Gentle neck rolls, shoulder shrugs, and wrist circles to release tension.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Physical Resetter", "Solo Decompressor"],
+    "tags": ["PHYSICAL", "SOLO"]
+  },
+  {
+    "id": "3",
+    "title": "Quick Walk",
+    "description": "Step outside for a brief walk around the block. Fresh air and movement combined.",
+    "duration_mins": 10,
+    "energy_level": "medium",
+    "recovery_styles": ["Physical Resetter", "Mental Unplugger"],
+    "tags": ["PHYSICAL", "OUTDOOR"]
+  },
+  {
+    "id": "4",
+    "title": "Coffee Chat",
+    "description": "Grab a drink with a colleague and catch up on non-work topics.",
+    "duration_mins": 15,
+    "energy_level": "medium",
+    "recovery_styles": ["Social Recharger"],
+    "tags": ["SOCIAL", "INDOOR"]
+  },
+  {
+    "id": "5",
+    "title": "Eye Rest",
+    "description": "Follow the 20-20-20 rule: every 20 mins, look at something 20 feet away for 20 seconds.",
+    "duration_mins": 1,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "QUICK"]
+  },
+  {
+    "id": "6",
+    "title": "Power Nap",
+    "description": "A 10-20 minute nap to restore alertness without grogginess.",
+    "duration_mins": 20,
+    "energy_level": "low",
+    "recovery_styles": ["Solo Decompressor", "Physical Resetter"],
+    "tags": ["SOLO", "RESTORATIVE"]
+  },
+  {
+    "id": "7",
+    "title": "Gratitude Moment",
+    "description": "Write down or think about three things you're grateful for today.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "MENTAL"]
+  },
+  {
+    "id": "8",
+    "title": "Team Check-in",
+    "description": "Brief informal chat with team members about how everyone's doing.",
+    "duration_mins": 10,
+    "energy_level": "medium",
+    "recovery_styles": ["Social Recharger"],
+    "tags": ["SOCIAL", "TEAM"]
+  },
+  {
+    "id": "9",
+    "title": "Standing Break",
+    "description": "Stand up and work for 15 minutes. Change your posture and perspective.",
+    "duration_mins": 15,
+    "energy_level": "low",
+    "recovery_styles": ["Physical Resetter"],
+    "tags": ["PHYSICAL", "WORK-FRIENDLY"]
+  },
+  {
+    "id": "10",
+    "title": "Music Break",
+    "description": "Listen to a favorite song or two. Let the music shift your mood.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "CREATIVE"]
+  },
+  {
+    "id": "11",
+    "title": "Lunch with Friend",
+    "description": "Share a meal with someone you enjoy. Conversation and food together.",
+    "duration_mins": 45,
+    "energy_level": "medium",
+    "recovery_styles": ["Social Recharger"],
+    "tags": ["SOCIAL", "FOOD"]
+  },
+  {
+    "id": "12",
+    "title": "Deep Breathing",
+    "description": "4-7-8 breathing: inhale for 4 counts, hold for 7, exhale for 8. Repeat 4 times.",
+    "duration_mins": 3,
+    "energy_level": "low",
+    "recovery_styles": ["Solo Decompressor", "Mental Unplugger"],
+    "tags": ["SOLO", "QUICK", "MENTAL"]
+  },
+  {
+    "id": "13",
+    "title": "Stair Climb",
+    "description": "Walk up and down a few flights of stairs to get your blood moving.",
+    "duration_mins": 5,
+    "energy_level": "high",
+    "recovery_styles": ["Physical Resetter"],
+    "tags": ["PHYSICAL", "INDOOR"]
+  },
+  {
+    "id": "14",
+    "title": "Doodle Time",
+    "description": "Grab a pen and paper. Doodle freely without any goal or purpose.",
+    "duration_mins": 10,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "CREATIVE"]
+  },
+  {
+    "id": "15",
+    "title": "Phone a Friend",
+    "description": "Quick call to someone you haven't talked to in a while.",
+    "duration_mins": 10,
+    "energy_level": "medium",
+    "recovery_styles": ["Social Recharger"],
+    "tags": ["SOCIAL", "REMOTE"]
+  },
+  {
+    "id": "16",
+    "title": "Nature View",
+    "description": "Find a window with a view of trees, sky, or greenery. Just observe for a few minutes.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "NATURE"]
+  },
+  {
+    "id": "17",
+    "title": "Yoga Poses",
+    "description": "Simple poses like child's pose, cat-cow, and forward fold to release tension.",
+    "duration_mins": 10,
+    "energy_level": "medium",
+    "recovery_styles": ["Physical Resetter", "Solo Decompressor"],
+    "tags": ["PHYSICAL", "SOLO"]
+  },
+  {
+    "id": "18",
+    "title": "Mindful Snack",
+    "description": "Eat something healthy slowly, focusing on taste and texture.",
+    "duration_mins": 10,
+    "energy_level": "low",
+    "recovery_styles": ["Solo Decompressor", "Mental Unplugger"],
+    "tags": ["SOLO", "FOOD"]
+  },
+  {
+    "id": "19",
+    "title": "Group Walk",
+    "description": "Invite colleagues for a walking meeting or casual stroll.",
+    "duration_mins": 15,
+    "energy_level": "medium",
+    "recovery_styles": ["Social Recharger", "Physical Resetter"],
+    "tags": ["SOCIAL", "PHYSICAL", "OUTDOOR"]
+  },
+  {
+    "id": "20",
+    "title": "Screen-Free Zone",
+    "description": "Step away from all screens. Sit quietly or look out a window.",
+    "duration_mins": 10,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "DIGITAL-DETOX"]
+  },
+  {
+    "id": "21",
+    "title": "Hand Massage",
+    "description": "Gently massage your hands and fingers. Great for desk workers.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Physical Resetter", "Solo Decompressor"],
+    "tags": ["PHYSICAL", "SOLO", "QUICK"]
+  },
+  {
+    "id": "22",
+    "title": "Podcast Snippet",
+    "description": "Listen to a short segment of an interesting podcast.",
+    "duration_mins": 15,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "LEARNING"]
+  },
+  {
+    "id": "23",
+    "title": "Virtual Coffee",
+    "description": "Schedule a brief video call with a remote colleague for casual chat.",
+    "duration_mins": 15,
+    "energy_level": "medium",
+    "recovery_styles": ["Social Recharger"],
+    "tags": ["SOCIAL", "REMOTE"]
+  },
+  {
+    "id": "24",
+    "title": "Jumping Jacks",
+    "description": "Quick burst of 20-30 jumping jacks to boost energy.",
+    "duration_mins": 3,
+    "energy_level": "high",
+    "recovery_styles": ["Physical Resetter"],
+    "tags": ["PHYSICAL", "QUICK", "ENERGIZING"]
+  },
+  {
+    "id": "25",
+    "title": "Journal Prompt",
+    "description": "Write freely for 5 minutes about how you're feeling right now.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger", "Solo Decompressor"],
+    "tags": ["SOLO", "REFLECTIVE"]
+  },
+  {
+    "id": "26",
+    "title": "Tea Ceremony",
+    "description": "Mindfully prepare and enjoy a cup of tea, focusing on each step.",
+    "duration_mins": 10,
+    "energy_level": "low",
+    "recovery_styles": ["Solo Decompressor", "Mental Unplugger"],
+    "tags": ["SOLO", "MINDFUL"]
+  },
+  {
+    "id": "27",
+    "title": "Desk Declutter",
+    "description": "Spend a few minutes organizing your workspace. Clear space, clear mind.",
+    "duration_mins": 10,
+    "energy_level": "low",
+    "recovery_styles": ["Mental Unplugger"],
+    "tags": ["SOLO", "PRODUCTIVE"]
+  },
+  {
+    "id": "28",
+    "title": "Compliment Someone",
+    "description": "Give a genuine compliment to a colleague. Connection through kindness.",
+    "duration_mins": 2,
+    "energy_level": "low",
+    "recovery_styles": ["Social Recharger"],
+    "tags": ["SOCIAL", "QUICK"]
+  },
+  {
+    "id": "29",
+    "title": "Photo Break",
+    "description": "Step outside and take a photo of something interesting or beautiful.",
+    "duration_mins": 10,
+    "energy_level": "medium",
+    "recovery_styles": ["Mental Unplugger", "Physical Resetter"],
+    "tags": ["CREATIVE", "OUTDOOR"]
+  },
+  {
+    "id": "30",
+    "title": "Body Scan",
+    "description": "Mentally scan from head to toe, noticing areas of tension and consciously relaxing them.",
+    "duration_mins": 5,
+    "energy_level": "low",
+    "recovery_styles": ["Solo Decompressor", "Physical Resetter"],
+    "tags": ["SOLO", "MINDFUL"]
+  }
+]

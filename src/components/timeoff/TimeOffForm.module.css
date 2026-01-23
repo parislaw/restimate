@@ -1,0 +1,50 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: calc(-1 * var(--spacing-sm));
+}
+
+.suggestionChip {
+  padding: 4px 12px;
+  font-size: var(--font-xs);
+  font-family: inherit;
+  color: var(--color-text-secondary);
+  background-color: var(--color-border-light);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.suggestionChip:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.dateRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: var(--spacing-sm);
+}
+
+@media (max-width: 480px) {
+  .dateRow {
+    grid-template-columns: 1fr;
+  }
+}
