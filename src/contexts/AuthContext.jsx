@@ -4,27 +4,46 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = supabaseUrl && supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null;
 
 const AuthContext = createContext({});
+
+const DEMO_USER = {
+  id: 'demo-user-12345',
+  email: 'demo@restimate.com',
+  user_metadata: { name: 'Demo User' },
+  aud: 'authenticated',
+  created_at: new Date().toISOString(),
+};
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isDemo, setIsDemo] = useState(false);
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    // Check for demo mode
+    const demoMode = localStorage.getItem('restimate_demo_mode');
+    if (demoMode === 'true') {
+      setUser(DEMO_USER);
+      setIsDemo(true);
+    } else if (supabase) {
+      // Get initial session from Supabase
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setUser(session?.user ?? null);
+      });
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
+      // Listen for auth changes
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user ?? null);
+      });
 
-    return () => subscription.unsubscribe();
+      return () => subscription.unsubscribe();
+    }
+
+    setLoading(false);
   }, []);
 
   const signUp = async (email, password) => {
@@ -54,17 +73,34 @@ export function AuthProvider({ children }) {
   };
 
   const signOut = async () => {
+    if (isDemo) {
+      localStorage.removeItem('restimate_demo_mode');
+      setUser(null);
+      setIsDemo(false);
+      return { error: null };
+    }
+
+    if (!supabase) return { error: new Error('Supabase not configured') };
+
     const { error } = await supabase.auth.signOut();
     return { error };
+  };
+
+  const demoLogin = () => {
+    localStorage.setItem('restimate_demo_mode', 'true');
+    setUser(DEMO_USER);
+    setIsDemo(true);
   };
 
   const value = {
     user,
     loading,
+    isDemo,
     signUp,
     signIn,
     signInWithMagicLink,
     signOut,
+    demoLogin,
     supabase,
   };
 

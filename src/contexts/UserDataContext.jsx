@@ -20,8 +20,21 @@ const defaultProfile = {
   reminder_enabled: false,
 };
 
+const DEMO_PROFILE = {
+  id: 'demo-user-12345',
+  recovery_style: 'Social Recharger',
+  workday_start: '09:00',
+  workday_end: '17:30',
+  break_frequency_mins: 90,
+  break_duration_mins: 15,
+  onboarding_completed: true,
+  reminder_enabled: true,
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString(),
+};
+
 export function UserDataProvider({ children }) {
-  const { user, supabase } = useAuth();
+  const { user, isDemo, supabase } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,16 +42,24 @@ export function UserDataProvider({ children }) {
   // Fetch user profile when user changes
   useEffect(() => {
     if (user) {
-      fetchProfile();
+      if (isDemo) {
+        // Use demo profile
+        setProfile(DEMO_PROFILE);
+        setLoading(false);
+      } else {
+        fetchProfile();
+      }
     } else {
       setProfile(null);
       setLoading(false);
     }
-  }, [user]);
+  }, [user, isDemo]);
 
   const fetchProfile = async () => {
     try {
       setLoading(true);
+      if (!supabase) throw new Error('Supabase not configured');
+
       const { data, error } = await supabase
         .from('user_profiles')
         .select('*')
@@ -59,6 +80,21 @@ export function UserDataProvider({ children }) {
 
   const createProfile = async (profileData) => {
     try {
+      if (isDemo) {
+        // Mock profile creation
+        const newProfile = {
+          id: user.id,
+          ...defaultProfile,
+          ...profileData,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+        setProfile(newProfile);
+        return { data: newProfile, error: null };
+      }
+
+      if (!supabase) throw new Error('Supabase not configured');
+
       const { data, error } = await supabase
         .from('user_profiles')
         .insert({
@@ -80,6 +116,19 @@ export function UserDataProvider({ children }) {
 
   const updateProfile = async (updates) => {
     try {
+      if (isDemo) {
+        // Mock profile update
+        const updatedProfile = {
+          ...profile,
+          ...updates,
+          updated_at: new Date().toISOString(),
+        };
+        setProfile(updatedProfile);
+        return { data: updatedProfile, error: null };
+      }
+
+      if (!supabase) throw new Error('Supabase not configured');
+
       const { data, error } = await supabase
         .from('user_profiles')
         .update({
