@@ -98,24 +98,24 @@ export default function Profile() {
           <CardContent>
             <h2 className={styles.sectionTitle}>Recovery Preferences</h2>
 
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Recovery Style</label>
-              {!isEditing ? (
+            {!isEditing ? (
+              <div className={styles.formGroup}>
+                <label className={styles.label}>Recovery Style</label>
                 <p className={styles.value}>{profile.recovery_style}</p>
-              ) : (
-                <Select
-                  label="Recovery Style"
-                  name="recovery_style"
-                  value={formData.recovery_style}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select a recovery style</option>
-                  {RECOVERY_STYLES.map(style => (
-                    <option key={style} value={style}>{style}</option>
-                  ))}
-                </Select>
-              )}
-            </div>
+              </div>
+            ) : (
+              <Select
+                label="Recovery Style"
+                name="recovery_style"
+                value={formData.recovery_style}
+                onChange={handleInputChange}
+              >
+                <option value="">Select a recovery style</option>
+                {RECOVERY_STYLES.map(style => (
+                  <option key={style} value={style}>{style}</option>
+                ))}
+              </Select>
+            )}
 
             <h2 className={styles.sectionTitle}>Work Schedule</h2>
 
