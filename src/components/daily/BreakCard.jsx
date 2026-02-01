@@ -20,10 +20,12 @@ export function BreakCard({ breakData, recoveryStyle, completed, onToggleComplet
     [recoveryStyle, breakData.duration]
   );
 
-  const suggestedAction = useMemo(() =>
-    matchingActions[breakData.id.charCodeAt(0) % matchingActions.length],
-    [breakData.id, matchingActions]
-  );
+  const suggestedAction = useMemo(() => {
+    if (matchingActions.length === 0) return undefined;
+    const idStr = String(breakData.id || '');
+    const charCode = idStr.charCodeAt(0) || 0;
+    return matchingActions[charCode % matchingActions.length];
+  }, [breakData.id, matchingActions]);
 
   return (
     <>
