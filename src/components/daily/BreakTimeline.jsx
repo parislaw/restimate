@@ -13,7 +13,7 @@ function formatDisplayTime(minutes) {
   return `${displayHours}${mins > 0 ? ':' + mins.toString().padStart(2, '0') : ''} ${period}`;
 }
 
-export function BreakTimeline({ breaks, workdayStart, workdayEnd }) {
+export function BreakTimeline({ breaks, workdayStart, workdayEnd, onBreakClick }) {
   const startMins = parseTime(workdayStart);
   const endMins = parseTime(workdayEnd);
   const totalMins = endMins - startMins;
@@ -68,6 +68,14 @@ export function BreakTimeline({ breaks, workdayStart, workdayEnd }) {
                 width: `${width}%`,
               }}
               title={`${brk.startTimeDisplay} - ${brk.endTimeDisplay}`}
+              onClick={() => onBreakClick?.(brk.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onBreakClick?.(brk.id);
+                }
+              }}
             >
               <span className={styles.breakTime}>{brk.startTimeDisplay}</span>
             </div>

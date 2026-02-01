@@ -8,8 +8,8 @@ const DEMO_ENTRIES = [
     id: '1',
     user_id: 'demo-user-12345',
     occasion: 'Summer Vacation',
-    start_date: '2025-07-01',
-    end_date: '2025-07-14',
+    start_date: '2026-07-01',
+    end_date: '2026-07-14',
     status: 'Planned',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -18,8 +18,8 @@ const DEMO_ENTRIES = [
     id: '2',
     user_id: 'demo-user-12345',
     occasion: 'Thanksgiving',
-    start_date: '2025-11-27',
-    end_date: '2025-11-30',
+    start_date: '2026-11-27',
+    end_date: '2026-11-30',
     status: 'Planned',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -28,8 +28,8 @@ const DEMO_ENTRIES = [
     id: '3',
     user_id: 'demo-user-12345',
     occasion: 'Holiday Break',
-    start_date: '2025-12-20',
-    end_date: '2026-01-05',
+    start_date: '2026-12-20',
+    end_date: '2027-01-05',
     status: 'Planned',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
@@ -192,6 +192,10 @@ export function TimeOffProvider({ children }) {
     }
   };
 
+  const refreshEntries = isDemo
+    ? () => setEntries(DEMO_ENTRIES)
+    : fetchEntries;
+
   const value = {
     entries,
     loading,
@@ -199,7 +203,7 @@ export function TimeOffProvider({ children }) {
     addEntry,
     updateEntry,
     deleteEntry,
-    refreshEntries: fetchEntries,
+    refreshEntries,
   };
 
   return (

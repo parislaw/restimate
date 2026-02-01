@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useBreakSchedule } from '../../hooks/useBreakSchedule';
 import { useInsights } from '../../hooks/useInsights';
 import { useUserData } from '../../contexts/UserDataContext';
@@ -11,9 +11,38 @@ import styles from './DailyPlanner.module.css';
 
 export function DailyPlanner() {
   const [showConfig, setShowConfig] = useState(false);
+  const [completedBreaks, setCompletedBreaks] = useState(new Set());
+  const breakRefsMap = useRef(new Map());
   const { profile } = useUserData();
   const schedule = useBreakSchedule();
   const insights = useInsights();
+
+  const toggleBreakCompletion = (breakId) => {
+    setCompletedBreaks(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(breakId)) {
+        newSet.delete(breakId);
+      } else {
+        newSet.add(breakId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleBreakClick = (breakId) => {
+    const element = breakRefsMap.current.get(breakId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  };
+
+  const registerBreakRef = (breakId, element) => {
+    if (element) {
+      breakRefsMap.current.set(breakId, element);
+    } else {
+      breakRefsMap.current.delete(breakId);
+    }
+  };
 
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
@@ -92,6 +121,7 @@ export function DailyPlanner() {
           breaks={schedule.breaks}
           workdayStart={schedule.workdayStart}
           workdayEnd={schedule.workdayEnd}
+          onBreakClick={handleBreakClick}
         />
       </section>
 
@@ -103,11 +133,17 @@ export function DailyPlanner() {
         </p>
         <div className={styles.breaksList}>
           {schedule.breaks.map((brk) => (
-            <BreakCard
+            <div
               key={brk.id}
-              breakData={brk}
-              recoveryStyle={profile?.recovery_style}
-            />
+              ref={(el) => registerBreakRef(brk.id, el)}
+            >
+              <BreakCard
+                breakData={brk}
+                recoveryStyle={profile?.recovery_style}
+                completed={completedBreaks.has(brk.id)}
+                onToggleCompletion={() => toggleBreakCompletion(brk.id)}
+              />
+            </div>
           ))}
           {schedule.breaks.length === 0 && (
             <Card padding="lg" className={styles.emptyCard}>

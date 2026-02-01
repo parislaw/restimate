@@ -9,6 +9,28 @@
   background-color: var(--color-background);
 }
 
+.header {
+  display: none;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-light);
+  background-color: white;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger:hover {
+  opacity: 0.7;
+}
+
 .content {
   max-width: var(--max-content-width);
   margin: 0 auto;
@@ -60,6 +82,11 @@
 @media (max-width: 768px) {
   .main {
     margin-left: 0;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
   }
 
   .content {

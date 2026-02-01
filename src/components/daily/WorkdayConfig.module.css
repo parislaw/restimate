@@ -22,6 +22,14 @@
   gap: var(--spacing-md);
 }
 
+.errorMessage {
+  padding: var(--spacing-md);
+  font-size: var(--font-sm);
+  color: white;
+  background-color: var(--color-error);
+  border-radius: var(--radius-md);
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;

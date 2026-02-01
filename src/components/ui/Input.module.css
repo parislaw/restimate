@@ -36,7 +36,7 @@
 }
 
 .input.error {
-  border-color: #EF4444;
+  border-color: var(--color-error);
 }
 
 .input.error:focus {
@@ -64,5 +64,5 @@
 
 .errorMessage {
   font-size: var(--font-xs);
-  color: #EF4444;
+  color: var(--color-error);
 }

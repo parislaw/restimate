@@ -49,12 +49,12 @@
 }
 
 .danger {
-  background-color: #EF4444;
+  background-color: var(--color-error);
   color: var(--color-text-inverse);
 }
 
 .danger:hover:not(:disabled) {
-  background-color: #DC2626;
+  background-color: var(--color-error-hover);
 }
 
 /* Sizes */

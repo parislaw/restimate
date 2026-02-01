@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Modal } from '../ui/Modal';
@@ -6,24 +6,37 @@ import { getBreakSuggestion } from '../../hooks/useBreakSchedule';
 import recoveryActions from '../../data/recoveryActions.json';
 import styles from './BreakCard.module.css';
 
-export function BreakCard({ breakData, recoveryStyle }) {
+export function BreakCard({ breakData, recoveryStyle, completed, onToggleCompletion }) {
   const [showModal, setShowModal] = useState(false);
 
   const suggestion = getBreakSuggestion(breakData.startTime);
 
   // Get actions that match the user's recovery style
-  const matchingActions = recoveryActions.filter((action) =>
-    action.recovery_styles.includes(recoveryStyle) &&
-    action.duration_mins <= breakData.duration
+  const matchingActions = useMemo(() =>
+    recoveryActions.filter((action) =>
+      action.recovery_styles.includes(recoveryStyle) &&
+      action.duration_mins <= breakData.duration
+    ),
+    [recoveryStyle, breakData.duration]
   );
 
-  const suggestedAction = matchingActions[Math.floor(Math.random() * matchingActions.length)];
+  const suggestedAction = useMemo(() =>
+    matchingActions[breakData.id.charCodeAt(0) % matchingActions.length],
+    [breakData.id, matchingActions]
+  );
 
   return (
     <>
-      <Card variant="default" padding="md" hoverable>
+      <Card variant="default" padding="md" hoverable className={completed ? styles.completed : ''}>
         <CardContent>
           <div className={styles.cardHeader}>
+            <input
+              type="checkbox"
+              className={styles.checkbox}
+              checked={completed}
+              onChange={onToggleCompletion}
+              aria-label={`Mark ${breakData.type} as completed`}
+            />
             <div className={styles.timeInfo}>
               <span className={styles.time}>{breakData.startTimeDisplay}</span>
               <span className={styles.duration}>{breakData.duration} min</span>

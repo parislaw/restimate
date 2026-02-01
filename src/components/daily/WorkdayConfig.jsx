@@ -22,6 +22,7 @@ const durationOptions = [
 export function WorkdayConfig({ onClose }) {
   const { profile, updateProfile } = useUserData();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [settings, setSettings] = useState({
     workdayStart: profile?.workday_start || '09:00',
     workdayEnd: profile?.workday_end || '17:00',
@@ -31,18 +32,34 @@ export function WorkdayConfig({ onClose }) {
 
   const handleChange = (field, value) => {
     setSettings((prev) => ({ ...prev, [field]: value }));
+    setError(null);
+  };
+
+  const validateSettings = () => {
+    if (settings.workdayEnd <= settings.workdayStart) {
+      setError('End time must be after start time');
+      return false;
+    }
+    return true;
   };
 
   const handleSave = async () => {
+    if (!validateSettings()) return;
+
     setLoading(true);
-    await updateProfile({
+    const { error: saveError } = await updateProfile({
       workday_start: settings.workdayStart,
       workday_end: settings.workdayEnd,
       break_frequency_mins: settings.breakFrequency,
       break_duration_mins: settings.breakDuration,
     });
     setLoading(false);
-    onClose();
+
+    if (saveError) {
+      setError(saveError.message || 'Failed to save settings');
+    } else {
+      onClose();
+    }
   };
 
   return (
@@ -62,6 +79,7 @@ export function WorkdayConfig({ onClose }) {
             label="Workday End"
             value={settings.workdayEnd}
             onChange={(e) => handleChange('workdayEnd', e.target.value)}
+            error={error?.includes('End time') ? error : ''}
           />
         </div>
 
@@ -91,11 +109,15 @@ export function WorkdayConfig({ onClose }) {
           </Select>
         </div>
 
+        {error && !error.includes('End time') && (
+          <div className={styles.errorMessage}>{error}</div>
+        )}
+
         <div className={styles.actions}>
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="ghost" onClick={onClose} disabled={loading}>
             Cancel
           </Button>
-          <Button onClick={handleSave} loading={loading}>
+          <Button onClick={handleSave} loading={loading} disabled={!!error || loading}>
             Save Changes
           </Button>
         </div>

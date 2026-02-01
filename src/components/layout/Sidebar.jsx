@@ -48,7 +48,7 @@ const navigation = [
   },
 ];
 
-export function Sidebar() {
+export function Sidebar({ isOpen, onClose }) {
   const { signOut, user } = useAuth();
   const { profile } = useUserData();
   const navigate = useNavigate();
@@ -58,8 +58,14 @@ export function Sidebar() {
     navigate('/');
   };
 
+  const handleNavClick = () => {
+    onClose?.();
+  };
+
   return (
-    <aside className={styles.sidebar}>
+    <>
+      {isOpen && <div className={styles.backdrop} onClick={onClose} />}
+      <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
       <div className={styles.logo}>
         <span className={styles.logoIcon}>☯</span>
         <span className={styles.logoText}>Restimate</span>
@@ -73,6 +79,7 @@ export function Sidebar() {
             className={({ isActive }) =>
               `${styles.navItem} ${isActive ? styles.active : ''}`
             }
+            onClick={handleNavClick}
           >
             {item.icon}
             <span>{item.name}</span>
@@ -102,5 +109,6 @@ export function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

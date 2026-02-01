@@ -8,6 +8,30 @@
   border-bottom: 2px solid var(--color-border-light);
 }
 
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.completed {
+  opacity: 0.6;
+}
+
+.completed .time {
+  color: var(--color-text-secondary);
+}
+
+.completed .badge {
+  opacity: 0.7;
+}
+
+.completed .suggestion {
+  opacity: 0.7;
+}
+
 .timeInfo {
   display: flex;
   flex-direction: column;

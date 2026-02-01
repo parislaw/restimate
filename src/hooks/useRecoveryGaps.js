@@ -164,31 +164,3 @@ function getRecommendations(longestStretch, totalTimeOff) {
   return recommendations;
 }
 
-/**
- * Get months with time off for calendar highlighting
- */
-export function useTimeOffByMonth() {
-  const { entries } = useTimeOff();
-
-  return useMemo(() => {
-    const monthMap = {};
-
-    entries.forEach(entry => {
-      const start = new Date(entry.start_date);
-      const end = new Date(entry.end_date);
-
-      // Mark all months between start and end
-      let current = new Date(start);
-      while (current <= end) {
-        const monthKey = `${current.getFullYear()}-${current.getMonth()}`;
-        if (!monthMap[monthKey]) {
-          monthMap[monthKey] = [];
-        }
-        monthMap[monthKey].push(entry);
-        current.setMonth(current.getMonth() + 1);
-      }
-    });
-
-    return monthMap;
-  }, [entries]);
-}

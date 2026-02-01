@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useUserData } from '../../contexts/UserDataContext';
@@ -5,6 +6,7 @@ import { Sidebar } from './Sidebar';
 import styles from './AppShell.module.css';
 
 export function AppShell() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const { needsOnboarding, loading: userLoading } = useUserData();
 
@@ -30,8 +32,21 @@ export function AppShell() {
 
   return (
     <div className={styles.appShell}>
-      <Sidebar />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <main className={styles.main}>
+        <div className={styles.header}>
+          <button
+            className={styles.hamburger}
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label="Toggle sidebar"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+        </div>
         <div className={styles.content}>
           <Outlet />
         </div>

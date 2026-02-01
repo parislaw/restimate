@@ -28,6 +28,9 @@
   --color-warning-bg: #FFFBEB;
   --color-info: #3B82F6;
   --color-info-bg: #EFF6FF;
+  --color-error: #EF4444;
+  --color-error-hover: #DC2626;
+  --color-error-bg: #FEE2E2;
 
   /* Recovery Style Colors */
   --color-social: #EC4899;

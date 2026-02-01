@@ -82,6 +82,23 @@
   color: var(--color-text-secondary);
 }
 
+.deleteConfirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.deleteConfirm p {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.deleteActions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
 @media (max-width: 640px) {
   .table th,
   .table td {

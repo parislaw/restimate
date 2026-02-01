@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useTimeOff } from '../../contexts/TimeOffContext';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Tag } from '../ui/Tag';
+import { Modal } from '../ui/Modal';
 import styles from './TimeOffTable.module.css';
 
 export function TimeOffTable({ entries, onEdit }) {
   const { deleteEntry } = useTimeOff();
+  const [deleteId, setDeleteId] = useState(null);
 
   const formatDate = (dateStr) => {
     return new Date(dateStr).toLocaleDateString('en-US', {
@@ -28,6 +31,15 @@ export function TimeOffTable({ entries, onEdit }) {
     }
   };
 
+  const handleConfirmDelete = async () => {
+    if (deleteId) {
+      await deleteEntry(deleteId);
+      setDeleteId(null);
+    }
+  };
+
+  const entryToDelete = entries.find(e => e.id === deleteId);
+
   if (entries.length === 0) {
     return (
       <Card padding="lg" className={styles.emptyState}>
@@ -43,7 +55,8 @@ export function TimeOffTable({ entries, onEdit }) {
   }
 
   return (
-    <Card padding="none" className={styles.tableWrapper}>
+    <>
+      <Card padding="none" className={styles.tableWrapper}>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -78,7 +91,7 @@ export function TimeOffTable({ entries, onEdit }) {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => deleteEntry(entry.id)}
+                  onClick={() => setDeleteId(entry.id)}
                 >
                   Delete
                 </Button>
@@ -88,5 +101,33 @@ export function TimeOffTable({ entries, onEdit }) {
         </tbody>
       </table>
     </Card>
+
+    <Modal
+      isOpen={!!deleteId}
+      onClose={() => setDeleteId(null)}
+      title="Delete Time Off"
+    >
+      <div className={styles.deleteConfirm}>
+        <p>
+          Are you sure you want to delete <strong>{entryToDelete?.occasion}</strong>?
+          This action cannot be undone.
+        </p>
+        <div className={styles.deleteActions}>
+          <Button
+            variant="ghost"
+            onClick={() => setDeleteId(null)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleConfirmDelete}
+          >
+            Delete
+          </Button>
+        </div>
+      </div>
+    </Modal>
+    </>
   );
 }

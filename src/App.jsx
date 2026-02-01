@@ -7,6 +7,7 @@ import { YearView } from './components/timeoff/YearView';
 import { ActionLibrary } from './components/actions/ActionLibrary';
 import { OnboardingContainer } from './components/onboarding/OnboardingContainer';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 
 function AppRoutes() {
   const { user, loading: authLoading } = useAuth();
@@ -39,6 +40,7 @@ function AppRoutes() {
             <Route path="daily" element={<DailyPlanner />} />
             <Route path="year" element={<YearView />} />
             <Route path="actions" element={<ActionLibrary />} />
+            <Route path="profile" element={<Profile />} />
             <Route index element={<Navigate to="/app/daily" replace />} />
           </Route>
           <Route path="/app/onboarding" element={<OnboardingShell />}>

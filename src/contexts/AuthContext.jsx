@@ -29,24 +29,30 @@ export function AuthProvider({ children }) {
     if (demoMode === 'true') {
       setUser(DEMO_USER);
       setIsDemo(true);
+      setLoading(false);
     } else if (supabase) {
       // Get initial session from Supabase
       supabase.auth.getSession().then(({ data: { session } }) => {
         setUser(session?.user ?? null);
+        setLoading(false);
       });
 
       // Listen for auth changes
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         setUser(session?.user ?? null);
+        setLoading(false);
       });
 
       return () => subscription.unsubscribe();
+    } else {
+      // No Supabase configured and not in demo mode
+      setLoading(false);
     }
-
-    setLoading(false);
   }, []);
 
   const signUp = async (email, password) => {
+    if (!supabase) return { data: null, error: new Error('Supabase not configured') };
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -55,6 +61,8 @@ export function AuthProvider({ children }) {
   };
 
   const signIn = async (email, password) => {
+    if (!supabase) return { data: null, error: new Error('Supabase not configured') };
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -63,6 +71,8 @@ export function AuthProvider({ children }) {
   };
 
   const signInWithMagicLink = async (email) => {
+    if (!supabase) return { data: null, error: new Error('Supabase not configured') };
+
     const { data, error } = await supabase.auth.signInWithOtp({
       email,
       options: {

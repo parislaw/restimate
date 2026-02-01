@@ -23,6 +23,7 @@ const occasionSuggestions = [
 export function TimeOffForm({ entry, onClose }) {
   const { addEntry, updateEntry } = useTimeOff();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     occasion: '',
     startDate: '',
@@ -43,23 +44,36 @@ export function TimeOffForm({ entry, onClose }) {
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    setError(null);
+  };
+
+  const validateForm = () => {
+    if (formData.endDate < formData.startDate) {
+      setError('End date must be on or after start date');
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     setLoading(true);
+    const { error: saveError } = entry
+      ? await updateEntry(entry.id, formData)
+      : await addEntry(formData);
 
-    if (entry) {
-      await updateEntry(entry.id, formData);
+    if (saveError) {
+      setError(saveError.message || 'Failed to save time off');
+      setLoading(false);
     } else {
-      await addEntry(formData);
+      setLoading(false);
+      onClose();
     }
-
-    setLoading(false);
-    onClose();
   };
 
-  const isValid = formData.occasion && formData.startDate && formData.endDate;
+  const isValid = formData.occasion && formData.startDate && formData.endDate && !error;
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -98,6 +112,7 @@ export function TimeOffForm({ entry, onClose }) {
           value={formData.endDate}
           min={formData.startDate}
           onChange={(e) => handleChange('endDate', e.target.value)}
+          error={error?.includes('End date') ? error : ''}
           required
         />
       </div>
@@ -114,11 +129,15 @@ export function TimeOffForm({ entry, onClose }) {
         ))}
       </Select>
 
+      {error && !error.includes('End date') && (
+        <div className={styles.errorMessage}>{error}</div>
+      )}
+
       <div className={styles.actions}>
-        <Button type="button" variant="ghost" onClick={onClose}>
+        <Button type="button" variant="ghost" onClick={onClose} disabled={loading}>
           Cancel
         </Button>
-        <Button type="submit" loading={loading} disabled={!isValid}>
+        <Button type="submit" loading={loading} disabled={!isValid || loading}>
           {entry ? 'Update' : 'Add'} Time Off
         </Button>
       </div>
