@@ -1,3 +1,4 @@
+import { forwardRef, useRef } from 'react';
 import styles from './BreakTimeline.module.css';
 
 function parseTime(timeStr) {
@@ -12,8 +13,6 @@ function formatDisplayTime(minutes) {
   const displayHours = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
   return `${displayHours}${mins > 0 ? ':' + mins.toString().padStart(2, '0') : ''} ${period}`;
 }
-
-import { forwardRef, useRef } from 'react';
 
 const BreakTimelineContent = forwardRef(({ breaks, workdayStart, workdayEnd, onBreakClick, onDragStart, draggingBreakId, onDragOver, onDrop }, trackRef) => {
   const startMins = parseTime(workdayStart);
