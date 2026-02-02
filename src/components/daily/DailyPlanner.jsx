@@ -70,6 +70,8 @@ export function DailyPlanner() {
     const percentage = (clickX / rect.width) * 100;
     console.log('Drop position:', clickX, 'percentage:', percentage);
 
+    console.log('Looking for break ID:', breakId, 'type:', typeof breakId);
+    console.log('Available break IDs:', schedule.breaks.map(b => ({ id: b.id, type: typeof b.id })));
     const breakObj = schedule.breaks.find(b => b.id === breakId);
     console.log('Break object:', breakObj);
     if (!breakObj) {
