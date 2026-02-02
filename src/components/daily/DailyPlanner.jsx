@@ -71,15 +71,23 @@ export function DailyPlanner() {
     console.log('Drop position:', clickX, 'percentage:', percentage);
 
     const breakObj = schedule.breaks.find(b => b.id === breakId);
-    if (!breakObj) return;
+    console.log('Break object:', breakObj);
+    if (!breakObj) {
+      console.log('No break object found');
+      return;
+    }
 
     // Calculate new time based on drag position
     const workdayStart = timeToMinutes(schedule.workdayStart);
     const workdayEnd = timeToMinutes(schedule.workdayEnd);
     const workdayDuration = workdayEnd - workdayStart;
 
+    console.log('Workday:', workdayStart, '-', workdayEnd, 'duration:', workdayDuration);
+
     const newStartMinutes = Math.floor(workdayStart + (percentage / 100) * workdayDuration);
     const snappedStart = snapToInterval(newStartMinutes);
+
+    console.log('New start minutes:', newStartMinutes, 'snapped:', snappedStart);
 
     // Ensure it stays within work hours
     const constrainedStart = Math.max(
@@ -89,6 +97,8 @@ export function DailyPlanner() {
 
     const newStartTime = minutesToTime(constrainedStart);
     const newEndTime = minutesToTime(constrainedStart + breakObj.duration);
+
+    console.log('New times:', newStartTime, '-', newEndTime);
 
     // Check for overlaps with other breaks
     const hasOverlap = schedule.breaks.some(b => {
