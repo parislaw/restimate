@@ -40,6 +40,7 @@ export function DailyPlanner() {
 
   // Handle drag start on timeline block
   const handleDragStart = (breakId, e) => {
+    console.log('Drag started for break:', breakId);
     setDraggingBreakId(breakId);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('breakId', breakId);
@@ -53,14 +54,21 @@ export function DailyPlanner() {
 
   // Handle drop on timeline
   const handleDrop = (e) => {
+    console.log('Drop event fired');
     e.preventDefault();
     const breakId = e.dataTransfer.getData('breakId');
+    console.log('Dropped break ID:', breakId);
 
-    if (!trackRef.current) return;
+    if (!trackRef.current) {
+      console.log('No track ref');
+      return;
+    }
 
     const rect = trackRef.current.getBoundingClientRect();
+    console.log('Track rect:', rect);
     const clickX = e.clientX - rect.left;
     const percentage = (clickX / rect.width) * 100;
+    console.log('Drop position:', clickX, 'percentage:', percentage);
 
     const breakObj = schedule.breaks.find(b => b.id === breakId);
     if (!breakObj) return;
@@ -94,10 +102,13 @@ export function DailyPlanner() {
     });
 
     if (!hasOverlap) {
+      console.log('No overlap, updating break to:', newStartTime, '-', newEndTime);
       setRescheduleBreaks(prev => ({
         ...prev,
         [breakId]: { startTime: newStartTime, endTime: newEndTime }
       }));
+    } else {
+      console.log('Overlap detected, not updating');
     }
 
     setDraggingBreakId(null);
