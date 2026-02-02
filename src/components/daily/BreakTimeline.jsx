@@ -13,7 +13,9 @@ function formatDisplayTime(minutes) {
   return `${displayHours}${mins > 0 ? ':' + mins.toString().padStart(2, '0') : ''} ${period}`;
 }
 
-export function BreakTimeline({ breaks, workdayStart, workdayEnd, onBreakClick, onDragStart, draggingBreakId }) {
+import { forwardRef, useRef } from 'react';
+
+const BreakTimelineContent = forwardRef(({ breaks, workdayStart, workdayEnd, onBreakClick, onDragStart, draggingBreakId, onDragOver, onDrop }, trackRef) => {
   const startMins = parseTime(workdayStart);
   const endMins = parseTime(workdayEnd);
   const totalMins = endMins - startMins;
@@ -40,7 +42,12 @@ export function BreakTimeline({ breaks, workdayStart, workdayEnd, onBreakClick, 
 
   return (
     <div className={styles.timeline}>
-      <div className={styles.track}>
+      <div
+        ref={trackRef}
+        className={styles.track}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+      >
         {/* Hour markers */}
         {hourMarkers.map((marker, idx) => (
           <div
@@ -97,4 +104,24 @@ export function BreakTimeline({ breaks, workdayStart, workdayEnd, onBreakClick, 
       </div>
     </div>
   );
-}
+});
+
+BreakTimelineContent.displayName = 'BreakTimeline';
+
+export const BreakTimeline = forwardRef(({ breaks, workdayStart, workdayEnd, onBreakClick, onDragStart, draggingBreakId, onDragOver, onDrop }, ref) => {
+  return (
+    <BreakTimelineContent
+      ref={ref}
+      breaks={breaks}
+      workdayStart={workdayStart}
+      workdayEnd={workdayEnd}
+      onBreakClick={onBreakClick}
+      onDragStart={onDragStart}
+      draggingBreakId={draggingBreakId}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    />
+  );
+});
+
+BreakTimeline.displayName = 'BreakTimeline';

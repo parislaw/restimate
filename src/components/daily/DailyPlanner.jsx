@@ -15,7 +15,7 @@ export function DailyPlanner() {
   const [rescheduleBreaks, setRescheduleBreaks] = useState({});
   const [draggingBreakId, setDraggingBreakId] = useState(null);
   const breakRefsMap = useRef(new Map());
-  const timelineRef = useRef(null);
+  const trackRef = useRef(null);
   const { profile } = useUserData();
   const schedule = useBreakSchedule();
   const insights = useInsights();
@@ -56,9 +56,9 @@ export function DailyPlanner() {
     e.preventDefault();
     const breakId = e.dataTransfer.getData('breakId');
 
-    if (!timelineRef.current) return;
+    if (!trackRef.current) return;
 
-    const rect = timelineRef.current.getBoundingClientRect();
+    const rect = trackRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const percentage = (clickX / rect.width) * 100;
 
@@ -204,24 +204,21 @@ export function DailyPlanner() {
       <section className={styles.timeline}>
         <h2 className={styles.sectionTitle}>Your Day</h2>
         <p className={styles.timelineHint}>Drag breaks to reschedule them</p>
-        <div
-          ref={timelineRef}
+        <BreakTimeline
+          ref={trackRef}
+          breaks={schedule.breaks.map(b => ({
+            ...b,
+            startTime: rescheduleBreaks[b.id]?.startTime || b.startTime,
+            endTime: rescheduleBreaks[b.id]?.endTime || b.endTime,
+          }))}
+          workdayStart={schedule.workdayStart}
+          workdayEnd={schedule.workdayEnd}
+          onBreakClick={handleBreakClick}
+          onDragStart={handleDragStart}
+          draggingBreakId={draggingBreakId}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-        >
-          <BreakTimeline
-            breaks={schedule.breaks.map(b => ({
-              ...b,
-              startTime: rescheduleBreaks[b.id]?.startTime || b.startTime,
-              endTime: rescheduleBreaks[b.id]?.endTime || b.endTime,
-            }))}
-            workdayStart={schedule.workdayStart}
-            workdayEnd={schedule.workdayEnd}
-            onBreakClick={handleBreakClick}
-            onDragStart={handleDragStart}
-            draggingBreakId={draggingBreakId}
-          />
-        </div>
+        />
       </section>
 
       {/* Break Cards */}
