@@ -40,7 +40,6 @@ export function DailyPlanner() {
 
   // Handle drag start on timeline block
   const handleDragStart = (breakId, e) => {
-    console.log('Drag started for break:', breakId);
     setDraggingBreakId(breakId);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('breakId', breakId);
@@ -54,43 +53,27 @@ export function DailyPlanner() {
 
   // Handle drop on timeline
   const handleDrop = (e) => {
-    console.log('Drop event fired');
     e.preventDefault();
     const breakId = e.dataTransfer.getData('breakId');
-    console.log('Dropped break ID:', breakId);
 
-    if (!trackRef.current) {
-      console.log('No track ref');
-      return;
-    }
+    if (!trackRef.current) return;
 
     const rect = trackRef.current.getBoundingClientRect();
-    console.log('Track rect:', rect);
     const clickX = e.clientX - rect.left;
     const percentage = (clickX / rect.width) * 100;
-    console.log('Drop position:', clickX, 'percentage:', percentage);
 
-    console.log('Looking for break ID:', breakId, 'type:', typeof breakId);
-    const breakIds = schedule.breaks.map(b => b.id);
-    console.log('Actual break IDs in schedule:', breakIds);
-    const breakObj = schedule.breaks.find(b => b.id === breakId);
-    console.log('Break object:', breakObj);
-    if (!breakObj) {
-      console.log('No break object found');
-      return;
-    }
+    // Convert breakId to number since dataTransfer returns strings
+    const numericBreakId = Number(breakId);
+    const breakObj = schedule.breaks.find(b => b.id === numericBreakId);
+    if (!breakObj) return;
 
     // Calculate new time based on drag position
     const workdayStart = timeToMinutes(schedule.workdayStart);
     const workdayEnd = timeToMinutes(schedule.workdayEnd);
     const workdayDuration = workdayEnd - workdayStart;
 
-    console.log('Workday:', workdayStart, '-', workdayEnd, 'duration:', workdayDuration);
-
     const newStartMinutes = Math.floor(workdayStart + (percentage / 100) * workdayDuration);
     const snappedStart = snapToInterval(newStartMinutes);
-
-    console.log('New start minutes:', newStartMinutes, 'snapped:', snappedStart);
 
     // Ensure it stays within work hours
     const constrainedStart = Math.max(
@@ -100,8 +83,6 @@ export function DailyPlanner() {
 
     const newStartTime = minutesToTime(constrainedStart);
     const newEndTime = minutesToTime(constrainedStart + breakObj.duration);
-
-    console.log('New times:', newStartTime, '-', newEndTime);
 
     // Check for overlaps with other breaks
     const hasOverlap = schedule.breaks.some(b => {
@@ -115,13 +96,10 @@ export function DailyPlanner() {
     });
 
     if (!hasOverlap) {
-      console.log('No overlap, updating break to:', newStartTime, '-', newEndTime);
       setRescheduleBreaks(prev => ({
         ...prev,
-        [breakId]: { startTime: newStartTime, endTime: newEndTime }
+        [numericBreakId]: { startTime: newStartTime, endTime: newEndTime }
       }));
-    } else {
-      console.log('Overlap detected, not updating');
     }
 
     setDraggingBreakId(null);
