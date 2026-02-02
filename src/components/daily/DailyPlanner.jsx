@@ -71,7 +71,8 @@ export function DailyPlanner() {
     console.log('Drop position:', clickX, 'percentage:', percentage);
 
     console.log('Looking for break ID:', breakId, 'type:', typeof breakId);
-    console.log('Available break IDs:', schedule.breaks.map(b => ({ id: b.id, type: typeof b.id })));
+    const breakIds = schedule.breaks.map(b => b.id);
+    console.log('Actual break IDs in schedule:', breakIds);
     const breakObj = schedule.breaks.find(b => b.id === breakId);
     console.log('Break object:', breakObj);
     if (!breakObj) {
