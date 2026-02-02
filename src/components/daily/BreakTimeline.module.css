@@ -45,13 +45,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: transform var(--transition-fast);
+  cursor: grab;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
   min-width: 40px;
+  user-select: none;
 }
 
 .breakBlock:hover {
   transform: scaleY(1.1);
+}
+
+.breakBlock:active {
+  cursor: grabbing;
+}
+
+.breakBlock.dragging {
+  opacity: 0.6;
+  transform: scaleY(1.1) scaleX(1.05);
 }
 
 .breakTime {

@@ -115,6 +115,13 @@
   border-bottom: 1px solid var(--color-border-light);
 }
 
+.timelineHint {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
 /* Breaks List */
 .breaksList {
   display: flex;

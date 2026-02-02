@@ -12,10 +12,96 @@ import styles from './DailyPlanner.module.css';
 export function DailyPlanner() {
   const [showConfig, setShowConfig] = useState(false);
   const [completedBreaks, setCompletedBreaks] = useState(new Set());
+  const [rescheduleBreaks, setRescheduleBreaks] = useState({});
+  const [draggingBreakId, setDraggingBreakId] = useState(null);
   const breakRefsMap = useRef(new Map());
+  const timelineRef = useRef(null);
   const { profile } = useUserData();
   const schedule = useBreakSchedule();
   const insights = useInsights();
+
+  // Parse time string "HH:MM" to minutes since start of day
+  const timeToMinutes = (timeStr) => {
+    const [hours, mins] = timeStr.split(':').map(Number);
+    return hours * 60 + mins;
+  };
+
+  // Convert minutes since start of day to "HH:MM" format
+  const minutesToTime = (mins) => {
+    const hours = Math.floor(mins / 60);
+    const minutes = mins % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  };
+
+  // Snap time to 15-minute intervals
+  const snapToInterval = (minutes, interval = 15) => {
+    return Math.round(minutes / interval) * interval;
+  };
+
+  // Handle drag start on timeline block
+  const handleDragStart = (breakId, e) => {
+    setDraggingBreakId(breakId);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('breakId', breakId);
+  };
+
+  // Handle drag over timeline
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  // Handle drop on timeline
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const breakId = e.dataTransfer.getData('breakId');
+
+    if (!timelineRef.current) return;
+
+    const rect = timelineRef.current.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percentage = (clickX / rect.width) * 100;
+
+    const breakObj = schedule.breaks.find(b => b.id === breakId);
+    if (!breakObj) return;
+
+    // Calculate new time based on drag position
+    const workdayStart = timeToMinutes(schedule.workdayStart);
+    const workdayEnd = timeToMinutes(schedule.workdayEnd);
+    const workdayDuration = workdayEnd - workdayStart;
+
+    const newStartMinutes = Math.floor(workdayStart + (percentage / 100) * workdayDuration);
+    const snappedStart = snapToInterval(newStartMinutes);
+
+    // Ensure it stays within work hours
+    const constrainedStart = Math.max(
+      workdayStart,
+      Math.min(snappedStart, workdayEnd - breakObj.duration)
+    );
+
+    const newStartTime = minutesToTime(constrainedStart);
+    const newEndTime = minutesToTime(constrainedStart + breakObj.duration);
+
+    // Check for overlaps with other breaks
+    const hasOverlap = schedule.breaks.some(b => {
+      if (b.id === breakId) return false;
+      const otherStart = timeToMinutes(b.startTime);
+      const otherEnd = timeToMinutes(b.endTime);
+      const newStart = timeToMinutes(newStartTime);
+      const newEnd = timeToMinutes(newEndTime);
+
+      return (newStart < otherEnd && newEnd > otherStart);
+    });
+
+    if (!hasOverlap) {
+      setRescheduleBreaks(prev => ({
+        ...prev,
+        [breakId]: { startTime: newStartTime, endTime: newEndTime }
+      }));
+    }
+
+    setDraggingBreakId(null);
+  };
 
   const toggleBreakCompletion = (breakId) => {
     setCompletedBreaks(prev => {
@@ -117,12 +203,25 @@ export function DailyPlanner() {
       {/* Visual Timeline */}
       <section className={styles.timeline}>
         <h2 className={styles.sectionTitle}>Your Day</h2>
-        <BreakTimeline
-          breaks={schedule.breaks}
-          workdayStart={schedule.workdayStart}
-          workdayEnd={schedule.workdayEnd}
-          onBreakClick={handleBreakClick}
-        />
+        <p className={styles.timelineHint}>Drag breaks to reschedule them</p>
+        <div
+          ref={timelineRef}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <BreakTimeline
+            breaks={schedule.breaks.map(b => ({
+              ...b,
+              startTime: rescheduleBreaks[b.id]?.startTime || b.startTime,
+              endTime: rescheduleBreaks[b.id]?.endTime || b.endTime,
+            }))}
+            workdayStart={schedule.workdayStart}
+            workdayEnd={schedule.workdayEnd}
+            onBreakClick={handleBreakClick}
+            onDragStart={handleDragStart}
+            draggingBreakId={draggingBreakId}
+          />
+        </div>
       </section>
 
       {/* Break Cards */}
