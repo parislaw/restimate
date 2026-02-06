@@ -35,7 +35,7 @@ export function YearView() {
           <h1 className={styles.title}>Year View</h1>
           <p className={styles.subtitle}>{currentYear} Time-Off Planning</p>
         </div>
-        <Button onClick={() => setShowForm(true)}>
+        <Button onClick={() => setShowForm(true)} data-tutorial="add-timeoff">
           Add Time Off
         </Button>
       </header>
@@ -102,7 +102,7 @@ export function YearView() {
       </section>
 
       {/* Calendar Grid */}
-      <section className={styles.calendar}>
+      <section className={styles.calendar} data-tutorial="year-view">
         <h2 className={styles.sectionTitle}>Calendar Overview</h2>
         <div className={styles.calendarGrid}>
           {months.map((month) => (
@@ -117,7 +117,7 @@ export function YearView() {
       </section>
 
       {/* Time Off Table */}
-      <section className={styles.table}>
+      <section className={styles.table} data-tutorial="timeoff-list">
         <h2 className={styles.sectionTitle}>Planned Time Off</h2>
         <TimeOffTable entries={entries} onEdit={handleEdit} />
       </section>

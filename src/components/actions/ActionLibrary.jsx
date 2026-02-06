@@ -53,11 +53,13 @@ export function ActionLibrary() {
         </div>
       </header>
 
-      <ActionFilter
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        recoveryStyle={profile?.recovery_style}
-      />
+      <div data-tutorial="action-filters">
+        <ActionFilter
+          filters={filters}
+          onFilterChange={handleFilterChange}
+          recoveryStyle={profile?.recovery_style}
+        />
+      </div>
 
       <div className={styles.results}>
         <p className={styles.count}>
@@ -66,7 +68,7 @@ export function ActionLibrary() {
       </div>
 
       {filteredActions.length > 0 ? (
-        <div className={styles.grid}>
+        <div className={styles.grid} data-tutorial="action-cards">
           {filteredActions.map((action) => (
             <ActionCard
               key={action.id}

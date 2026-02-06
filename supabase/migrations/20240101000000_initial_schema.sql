@@ -10,6 +10,7 @@ create table public.user_profiles (
   break_frequency_mins integer not null default 90,
   break_duration_mins integer not null default 15,
   onboarding_completed boolean not null default false,
+  tutorial_completed boolean not null default false,
   reminder_enabled boolean not null default false,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null

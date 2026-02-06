@@ -36,7 +36,9 @@ export function DailyPlanner() {
       </header>
 
       {showConfig && (
-        <WorkdayConfig onClose={() => setShowConfig(false)} />
+        <div data-tutorial="workday-config">
+          <WorkdayConfig onClose={() => setShowConfig(false)} />
+        </div>
       )}
 
       {/* Insights Section */}
@@ -86,7 +88,7 @@ export function DailyPlanner() {
       </section>
 
       {/* Visual Timeline */}
-      <section className={styles.timeline}>
+      <section className={styles.timeline} data-tutorial="break-timeline">
         <h2 className={styles.sectionTitle}>Your Day</h2>
         <BreakTimeline
           breaks={schedule.breaks}
@@ -96,7 +98,7 @@ export function DailyPlanner() {
       </section>
 
       {/* Break Cards */}
-      <section className={styles.breaks}>
+      <section className={styles.breaks} data-tutorial="break-suggestions">
         <h2 className={styles.sectionTitle}>Rest Points</h2>
         <p className={styles.sectionSubtitle}>
           {schedule.breakFrequency}-minute focus blocks, {schedule.breakDuration}-minute breaks

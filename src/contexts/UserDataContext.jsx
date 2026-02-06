@@ -17,6 +17,7 @@ const defaultProfile = {
   break_frequency_mins: 90,
   break_duration_mins: 15,
   onboarding_completed: false,
+  tutorial_completed: false,
   reminder_enabled: false,
 };
 
